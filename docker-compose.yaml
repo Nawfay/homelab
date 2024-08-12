@@ -208,4 +208,3 @@ services:
       - PGID=${PGID}
     volumes:
       - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/config
-    restart: unless-stopped
