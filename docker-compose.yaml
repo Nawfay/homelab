@@ -177,17 +177,35 @@ services:
     ports:
       - '7575:7575'
 
-  watchstate:
-      container_name: watchstate
-      image: ghcr.io/arabcoders/watchstate:latest
-      environment:
+  jellyplex-watched:
+    image: luigi311/jellyplex-watched:latest
+    container_name: jellyplex-watched
+    restart: always
+    environment:
+      - DRYRUN=True
+      - DEBUG=True
+      - DEBUG_LEVEL=info
+      - RUN_ONLY_ONCE=False
+      - SLEEP_DURATION=3600
+      - LOGFILE=/config/log.log
+      - MARKFILE=/config/mark.log
+      - USER_MAPPING={"Dishit79":"Ayham"}
+      # - LIBRARY_MAPPING={"TV Shows":"Shows"}
+      - BLACKLIST_LIBRARY=
+      - WHITELIST_LIBRARY=
+      - BLACKLIST_LIBRARY_TYPE=
+      - WHITELIST_LIBRARY_TYPE=
+      - BLACKLIST_USERS=
+      - WHITELIST_USERS=
+      - PLEX_BASEURL=http://10.0.0.204:32400
+      - PLEX_TOKEN=aVaCFv3CPhMMN6XWyNTx
+      - JELLYFIN_BASEURL=http://10.0.0.204:8096
+      - JELLYFIN_TOKEN=1f3318787e34438d8d643f2fe87bf69a
+      - SSL_BYPASS=True
+      - SYNC_FROM_PLEX_TO_JELLYFIN=True
+      - SYNC_FROM_JELLYFIN_TO_PLEX=True
       - PUID=${PUID}
       - PGID=${PGID}
-      # To change the user/group id associated with the tool change the following line.
-      user: "${PUID}:${PGID}"
-      restart: unless-stopped
-      ports:
-          - "9080:8080" # The port which will serve WebUI + API + Webhooks
-      volumes:
-          - ${INSTALL_DIRECTORY}/config/watchstate:/config:rw # mount current directory to container /config directory.
-
+    volumes:
+      - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/config
+    restart: unless-stopped
