@@ -101,17 +101,17 @@ services:
       - 9696:9696
     restart: unless-stopped
 
-  # Overseerr is used to query, add downloads to the download queue and index Movies and TV Shows
-  overseerr:
-    image: lscr.io/linuxserver/overseerr:latest
-    container_name: overseerr
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
     environment:
+      - LOG_LEVEL=debug
       - PUID=${PUID}
       - PGID=${PGID}
-    volumes:
-      - ${INSTALL_DIRECTORY}/config/overseerr:/config
     ports:
       - 5055:5055
+    volumes:
+      - ${INSTALL_DIRECTORY}/config/jellyseerr:/app/config
     restart: unless-stopped
 
   # Bazarr is used to download and categorize subtitles
@@ -186,7 +186,7 @@ services:
       - DEBUG=True
       - DEBUG_LEVEL=info
       - RUN_ONLY_ONCE=False
-      - SLEEP_DURATION=3600
+      - SLEEP_DURATION=600
       - LOGFILE=/config/log.log
       - MARKFILE=/config/mark.log
       - USER_MAPPING={"Dishit79":"Ayham"}
