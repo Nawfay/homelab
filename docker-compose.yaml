@@ -187,7 +187,7 @@ services:
       user: "${PUID}:${PGID}"
       restart: unless-stopped
       ports:
-          - "9080:9080" # The port which will serve WebUI + API + Webhooks
+          - "8080:9080" # The port which will serve WebUI + API + Webhooks
       volumes:
-          - ${INSTALL_DIRECTORY}/watchstate:/config:rw # mount current directory to container /config directory.
+          - ${INSTALL_DIRECTORY}/config/watchstate:/config:rw # mount current directory to container /config directory.
 
