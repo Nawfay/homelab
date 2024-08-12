@@ -147,3 +147,17 @@ services:
       - ${INSTALL_DIRECTORY}/homarr:/data
     ports:
       - '7575:7575'
+
+  watchstate:
+      container_name: watchstate
+      image: ghcr.io/arabcoders/watchstate:latest
+      environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      # To change the user/group id associated with the tool change the following line.
+      user: "${PUID}:${PGID}"
+      restart: unless-stopped
+      ports:
+          - "9080:9080" # The port which will serve WebUI + API + Webhooks
+      volumes:
+          - ${INSTALL_DIRECTORY}/watchstate:/config:rw # mount current directory to container /config directory.
