@@ -18,6 +18,21 @@ services:
       - 8096:8096 # plex
     restart: unless-stopped
 
+  # plex is used to serve your media to the client devices
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - VERSION=docker
+    volumes:
+      - ${MEDIA_DIRECTORY}/tvshows:/tv
+      - ${MEDIA_DIRECTORY}/movies:/movies
+      - ${INSTALL_DIRECTORY}/config/plex/:/config
+    restart: unless-stopped
+
   # qBitorrent is used to download torrents
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:4.6.0
@@ -114,3 +129,15 @@ services:
     ports:
       - "8191:8191"
     restart: unless-stopped
+
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - ${INSTALL_DIRECTORY}/homarr:/app/data/configs
+      - ${INSTALL_DIRECTORY}/homarr:/app/public/icons
+      - ${INSTALL_DIRECTORY}/homarr:/data
+    ports:
+      - '7575:7575'
