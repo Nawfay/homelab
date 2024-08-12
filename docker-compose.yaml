@@ -101,6 +101,23 @@ services:
       - 9696:9696
     restart: unless-stopped
 
+  # Bazarr is used to download and categorize subtitles
+  # https://www.bazarr.media/
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - ${MEDIA_DIRECTORY}/movies:/movies
+      - ${MEDIA_DIRECTORY}/tvshows:/tv
+      - ${INSTALL_DIRECTORY}/config/bazarr:/config
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+
   # Portainer helps debugging and monitors the containers
   portainer:
     image: portainer/portainer-ce
