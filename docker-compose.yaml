@@ -101,6 +101,19 @@ services:
       - 9696:9696
     restart: unless-stopped
 
+  # Overseerr is used to query, add downloads to the download queue and index Movies and TV Shows
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - ${INSTALL_DIRECTORY}/config/overseerr:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+
   # Bazarr is used to download and categorize subtitles
   # https://www.bazarr.media/
   # bazarr:
@@ -116,7 +129,6 @@ services:
   #   ports:
   #     - 6767:6767
   #   restart: unless-stopped
-
 
   # Portainer helps debugging and monitors the containers
   portainer:
@@ -178,3 +190,4 @@ services:
           - "9080:9080" # The port which will serve WebUI + API + Webhooks
       volumes:
           - ${INSTALL_DIRECTORY}/watchstate:/config:rw # mount current directory to container /config directory.
+
