@@ -13,6 +13,8 @@ services:
     volumes:
       - ${MEDIA_DIRECTORY}/movies:/data/movies
       - ${MEDIA_DIRECTORY}/tvshows:/data/tvshows
+      - ${MEDIA_DIRECTORY}/anime_tvshows:/data/anime_tvshows
+      - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
       - ${INSTALL_DIRECTORY}/config/jellyfin:/config
     ports: # plex
       - 8096:8096 # plex
@@ -30,6 +32,8 @@ services:
     volumes:
       - ${MEDIA_DIRECTORY}/tvshows:/tv
       - ${MEDIA_DIRECTORY}/movies:/movies
+      - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
+      - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
       - ${INSTALL_DIRECTORY}/config/plex/:/config
     restart: unless-stopped
 
@@ -59,6 +63,7 @@ services:
       - PGID=${PGID}
     volumes:
       - ${MEDIA_DIRECTORY}/tvshows:/tv
+      - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
       - ${MEDIA_DIRECTORY}/downloads:/downloads
       - ${INSTALL_DIRECTORY}/config/sonarr:/config
     ports:
@@ -75,6 +80,7 @@ services:
       - PGID=${PGID}
     volumes:
       - ${MEDIA_DIRECTORY}/movies:/movies
+      - ${MEDIA_DIRECTORY}/anime_movies:/anime_movies
       - ${MEDIA_DIRECTORY}/downloads:/downloads
       - ${INSTALL_DIRECTORY}/config/radarr:/config
     ports:
