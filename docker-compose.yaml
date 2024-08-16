@@ -182,13 +182,15 @@ services:
     container_name: jellyplex-watched
     restart: always
     environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
       - DRYRUN=True
       - DEBUG=True
       - DEBUG_LEVEL=info
       - RUN_ONLY_ONCE=False
       - SLEEP_DURATION=600
-      - LOGFILE=/tmp/log.log
-      - MARKFILE=/tmp/mark.log
+      - LOGFILE=/config/log.log
+      - MARKFILE=/config/mark.log
       - USER_MAPPING={"Dishit79":"Ayham"}
       # - LIBRARY_MAPPING={"TV Shows":"Shows"}
       - BLACKLIST_LIBRARY=
@@ -204,7 +206,6 @@ services:
       - SSL_BYPASS=True
       - SYNC_FROM_PLEX_TO_JELLYFIN=True
       - SYNC_FROM_JELLYFIN_TO_PLEX=True
-      - PUID=${PUID}
-      - PGID=${PGID}
     volumes:
-      - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/tmp
+      - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/config
+
