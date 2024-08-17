@@ -189,10 +189,10 @@ services:
       - DEBUG_LEVEL=info
       - RUN_ONLY_ONCE=False
       - SLEEP_DURATION=600
-      - LOGFILE=/config/log.log
-      - MARKFILE=/config/mark.log
+      - LOGFILE=/tmp/log.log
+      - MARKFILE=/tmp/mark.log
       - USER_MAPPING={"Dishit79":"Ayham"}
-      # - LIBRARY_MAPPING={"TV Shows":"Shows"}
+      - LIBRARY_MAPPING={"TV Shows":"Shows"}
       - BLACKLIST_LIBRARY=
       - WHITELIST_LIBRARY=
       - BLACKLIST_LIBRARY_TYPE=
