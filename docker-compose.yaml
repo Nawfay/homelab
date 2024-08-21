@@ -1,11 +1,9 @@
 version: "3"
 
 services:
-  # <media_service> is used to serve your media to the client devices
   jellyfin:
     image: lscr.io/linuxserver/jellyfin
     container_name: jellyfin
-    #network_mode: host # plex
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -113,22 +111,6 @@ services:
     volumes:
       - ${INSTALL_DIRECTORY}/config/jellyseerr:/app/config
     restart: unless-stopped
-
-  # Bazarr is used to download and categorize subtitles
-  # https://www.bazarr.media/
-  # bazarr:
-  #   image: lscr.io/linuxserver/bazarr
-  #   container_name: bazarr
-  #   environment:
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #   volumes:
-  #     - ${MEDIA_DIRECTORY}/movies:/movies
-  #     - ${MEDIA_DIRECTORY}/tvshows:/tv
-  #     - ${INSTALL_DIRECTORY}/config/bazarr:/config
-  #   ports:
-  #     - 6767:6767
-  #   restart: unless-stopped
 
   # Portainer helps debugging and monitors the containers
   portainer:
