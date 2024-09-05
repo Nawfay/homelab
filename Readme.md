@@ -1,7 +1,7 @@
 
 # Auto-Homelab Deployment
 
-An auto deployment script to deploy docker compose file onto a server with minimal effort.
+An auto deployment script to deploy docker services onto a server with minimal effort.
 
 #### Current Services:
 - JellyFin (8096)
@@ -19,7 +19,7 @@ An auto deployment script to deploy docker compose file onto a server with minim
 ### Extra Services
 - Themerr-normalize
 
-Themerr-normalize is a python scipt that is used with the Themerr plugin on Jellyfin to normalize and lower the audio. [GitHub](https://github.com/Dishit79/themerr-normalize)
+Themerr-normalize is a python script that is used with the Themerr plugin on Jellyfin to normalize and lower the audio. [GitHub](https://github.com/Dishit79/themerr-normalize)
 
 ## Installation Guide
 
