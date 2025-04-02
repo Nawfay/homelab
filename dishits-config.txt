@@ -1,7 +1,7 @@
 # Base configuration
 PUID=1000
 PGID=1000
-MEDIA_DIRECTORY=/home/nawaf/media
+MEDIA_DIRECTORY=/home/nawaf/merged/media
 INSTALL_DIRECTORY=/home/nawaf/config
 
 
