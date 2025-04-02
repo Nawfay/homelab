@@ -19,21 +19,21 @@ services:
     restart: unless-stopped
 
   # plex is used to serve your media to the client devices
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    network_mode: host
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - VERSION=docker
-    volumes:
-      - ${MEDIA_DIRECTORY}/tvshows:/tv
-      - ${MEDIA_DIRECTORY}/movies:/movies
-      - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
-      - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
-      - ${INSTALL_DIRECTORY}/config/plex/:/config
-    restart: unless-stopped
+  # plex:
+  #   image: lscr.io/linuxserver/plex:latest
+  #   container_name: plex
+  #   network_mode: host
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - VERSION=docker
+  #   volumes:
+  #     - ${MEDIA_DIRECTORY}/tvshows:/tv
+  #     - ${MEDIA_DIRECTORY}/movies:/movies
+  #     - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
+  #     - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
+  #     - ${INSTALL_DIRECTORY}/config/plex/:/config
+  #   restart: unless-stopped
 
   # qBitorrent is used to download torrents
   qbittorrent:
@@ -159,35 +159,35 @@ services:
     ports:
       - '7575:7575'
 
-  jellyplex-watched:
-    image: luigi311/jellyplex-watched:latest
-    container_name: jellyplex-watched
-    restart: always
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - DRYRUN=True
-      - DEBUG=True
-      - DEBUG_LEVEL=info
-      - RUN_ONLY_ONCE=False
-      - SLEEP_DURATION=600
-      - LOGFILE=/tmp/log.log
-      - MARKFILE=/tmp/mark.log
-      - USER_MAPPING={"Dishit79":"Ayham"}
-      - LIBRARY_MAPPING={"TV Shows":"Shows"}
-      - BLACKLIST_LIBRARY=
-      - WHITELIST_LIBRARY=
-      - BLACKLIST_LIBRARY_TYPE=
-      - WHITELIST_LIBRARY_TYPE=
-      - BLACKLIST_USERS=
-      - WHITELIST_USERS=
-      - PLEX_BASEURL=http://10.0.0.204:32400
-      - PLEX_TOKEN=aVaCFv3CPhMMN6XWyNTx
-      - JELLYFIN_BASEURL=http://10.0.0.204:8096
-      - JELLYFIN_TOKEN=1f3318787e34438d8d643f2fe87bf69a
-      - SSL_BYPASS=True
-      - SYNC_FROM_PLEX_TO_JELLYFIN=True
-      - SYNC_FROM_JELLYFIN_TO_PLEX=True
+  # jellyplex-watched:
+  #   image: luigi311/jellyplex-watched:latest
+  #   container_name: jellyplex-watched
+  #   restart: always
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - DRYRUN=True
+  #     - DEBUG=True
+  #     - DEBUG_LEVEL=info
+  #     - RUN_ONLY_ONCE=False
+  #     - SLEEP_DURATION=600
+  #     - LOGFILE=/tmp/log.log
+  #     - MARKFILE=/tmp/mark.log
+  #     - USER_MAPPING={"Dishit79":"Ayham"}
+  #     - LIBRARY_MAPPING={"TV Shows":"Shows"}
+  #     - BLACKLIST_LIBRARY=
+  #     - WHITELIST_LIBRARY=
+  #     - BLACKLIST_LIBRARY_TYPE=
+  #     - WHITELIST_LIBRARY_TYPE=
+  #     - BLACKLIST_USERS=
+  #     - WHITELIST_USERS=
+  #     - PLEX_BASEURL=http://10.0.0.204:32400
+  #     - PLEX_TOKEN=aVaCFv3CPhMMN6XWyNTx
+  #     - JELLYFIN_BASEURL=http://10.0.0.204:8096
+  #     - JELLYFIN_TOKEN=1f3318787e34438d8d643f2fe87bf69a
+  #     - SSL_BYPASS=True
+  #     - SYNC_FROM_PLEX_TO_JELLYFIN=True
+  #     - SYNC_FROM_JELLYFIN_TO_PLEX=True
     # volumes:
     #   - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/config
 
