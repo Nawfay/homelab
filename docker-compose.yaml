@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin
@@ -13,31 +11,15 @@ services:
       - ${MEDIA_DIRECTORY}/tvshows:/data/tvshows
       - ${MEDIA_DIRECTORY}/anime_tvshows:/data/anime_tvshows
       - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
-      - ${INSTALL_DIRECTORY}/config/jellyfin:/config
-    ports: # plex
-      - 8096:8096 # plex
-    restart: unless-stopped
+      - ${CONFIG_DIRECTORY}/config/jellyfin:/config
 
-  # plex is used to serve your media to the client devices
-  # plex:
-  #   image: lscr.io/linuxserver/plex:latest
-  #   container_name: plex
-  #   network_mode: host
-  #   environment:
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #     - VERSION=docker
-  #   volumes:
-  #     - ${MEDIA_DIRECTORY}/tvshows:/tv
-  #     - ${MEDIA_DIRECTORY}/movies:/movies
-  #     - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
-  #     - ${MEDIA_DIRECTORY}/anime_movies:/data/anime_movies
-  #     - ${INSTALL_DIRECTORY}/config/plex/:/config
-  #   restart: unless-stopped
+    ports: 
+      - 8096:8096 
+    restart: unless-stopped
 
   # qBitorrent is used to download torrents
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
     environment:
       - PUID=${PUID}
@@ -45,7 +27,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${MEDIA_DIRECTORY}/downloads:/downloads
-      - ${INSTALL_DIRECTORY}/config/qbittorrent:/config
+      - ${CONFIG_DIRECTORY}/config/qbittorrent:/config
     restart: unless-stopped
     ports: # qbittorrent
       - 8080:8080 # qbittorrent
@@ -63,7 +45,7 @@ services:
       - ${MEDIA_DIRECTORY}/tvshows:/tv
       - ${MEDIA_DIRECTORY}/anime_tvshows:/anime_tvshows
       - ${MEDIA_DIRECTORY}/downloads:/downloads
-      - ${INSTALL_DIRECTORY}/config/sonarr:/config
+      - ${CONFIG_DIRECTORY}/config/sonarr:/config
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -80,7 +62,7 @@ services:
       - ${MEDIA_DIRECTORY}/movies:/movies
       - ${MEDIA_DIRECTORY}/anime_movies:/anime_movies
       - ${MEDIA_DIRECTORY}/downloads:/downloads
-      - ${INSTALL_DIRECTORY}/config/radarr:/config
+      - ${CONFIG_DIRECTORY}/config/radarr:/config
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -94,7 +76,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
-      - ${INSTALL_DIRECTORY}/config/prowlarr:/config
+      - ${CONFIG_DIRECTORY}/config/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -109,24 +91,12 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - ${INSTALL_DIRECTORY}/config/jellyseerr:/app/config
-    restart: unless-stopped
-
-  # Portainer helps debugging and monitors the containers
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
-    ports:
-      - 9000:9000
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${INSTALL_DIRECTORY}/config/portainer:/data
+      - ${CONFIG_DIRECTORY}/config/jellyseerr:/app/config
     restart: unless-stopped
 
   # Watchtower is going to keep our instances updated
   watchtower:
-    image: containrrr/watchtower
+    image: beatkind/watchtower
     container_name: watchtower
     environment:
       - WATCHTOWER_CLEANUP=true
@@ -146,48 +116,4 @@ services:
     ports:
       - "8191:8191"
     restart: unless-stopped
-
-  homarr:
-    container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - ${INSTALL_DIRECTORY}/homarr:/app/data/configs
-      - ${INSTALL_DIRECTORY}/homarr:/app/public/icons
-      - ${INSTALL_DIRECTORY}/homarr:/data
-    ports:
-      - '7575:7575'
-
-  # jellyplex-watched:
-  #   image: luigi311/jellyplex-watched:latest
-  #   container_name: jellyplex-watched
-  #   restart: always
-  #   environment:
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #     - DRYRUN=True
-  #     - DEBUG=True
-  #     - DEBUG_LEVEL=info
-  #     - RUN_ONLY_ONCE=False
-  #     - SLEEP_DURATION=600
-  #     - LOGFILE=/tmp/log.log
-  #     - MARKFILE=/tmp/mark.log
-  #     - USER_MAPPING={"Dishit79":"Ayham"}
-  #     - LIBRARY_MAPPING={"TV Shows":"Shows"}
-  #     - BLACKLIST_LIBRARY=
-  #     - WHITELIST_LIBRARY=
-  #     - BLACKLIST_LIBRARY_TYPE=
-  #     - WHITELIST_LIBRARY_TYPE=
-  #     - BLACKLIST_USERS=
-  #     - WHITELIST_USERS=
-  #     - PLEX_BASEURL=http://10.0.0.204:32400
-  #     - PLEX_TOKEN=aVaCFv3CPhMMN6XWyNTx
-  #     - JELLYFIN_BASEURL=http://10.0.0.204:8096
-  #     - JELLYFIN_TOKEN=1f3318787e34438d8d643f2fe87bf69a
-  #     - SSL_BYPASS=True
-  #     - SYNC_FROM_PLEX_TO_JELLYFIN=True
-  #     - SYNC_FROM_JELLYFIN_TO_PLEX=True
-    # volumes:
-    #   - ${INSTALL_DIRECTORY}/config/jellyplex-watched:/config
 
